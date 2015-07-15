@@ -8,15 +8,24 @@ public class PayBean {
 	// 메소드는 선언부, 연산부, 출력부 이렇게 나누고
 	// Bean 클래스라면 멤버필드 + 멤버메소드
 	private String name; // 멤버필드 변수(멤변)는 초기화를 하지 않는다!!!
-	private int salary, tax, money;
+	private int salary;
 
 	// 멤버메소드 영역이 시작
+	
+	// 스캐너로 받는녀석은 setter, getter를 다 만들고 
+	// 연산을 하거나 스캐너를 쓰지않으면 getter만 만든다.
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	public String getName() {
+		return name;
+	}
+	
 	public void setSalary(int salary) {
 		this.salary = salary;
+	}
+	public int getSalary() {
+		return salary;
 	}
 
 	public int getTax() {

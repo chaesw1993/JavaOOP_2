@@ -22,7 +22,7 @@ public class PayMain {
 		 * */
 		Scanner scanner = new Scanner(System.in);
 		String name = ""; // 메인메서드 내부의 지역변수
-		int salary = 0,tax=0,money=0;
+		int salary = 0;
 		System.out.println("이름 : ");
 		name = scanner.next();
 		System.out.println("월급 : ");
@@ -32,6 +32,7 @@ public class PayMain {
 		payBean.setName(name);
 		payBean.setSalary(salary);
 		
+		System.out.println(payBean.getName() + "님 반갑습니다.");
 		System.out.println(payBean.toString());
 		
 	}
