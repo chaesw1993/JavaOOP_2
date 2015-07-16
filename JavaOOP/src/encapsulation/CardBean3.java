@@ -10,8 +10,6 @@ public class CardBean3 {
 		객체가 만들어짐과 동시에 값을 할당하도록 특수하게 만들어진 *=== 메소드 ===* 이다.
 	*/
 	
-	
-		
 			/* ===== Field ===== */
 	
 	private String name, name2;	
