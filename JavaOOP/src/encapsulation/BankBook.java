@@ -41,7 +41,7 @@ public class BankBook implements Account{	// interface에 있는것을 "무조�
 	// BankBook.bank() --> 클래스변수가 값을 호출하는 상태
 	
 /* ===== 필드 ===== */
-	private static String BANK;
+	public static String BANK;
 	// 변수는 변수인데 클래스로 호출되는놈
 	private String name;
 	private int bankBookNum, money;
