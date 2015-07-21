@@ -1,4 +1,4 @@
-package inhebitance;
+package inheritance;
 /*
  * @ Date : 2015.07.20
  * @ Author : Chae S W
