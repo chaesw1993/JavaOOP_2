@@ -76,17 +76,22 @@ public class Bank implements BankRole{
 	@Override	// 계좌 검색(이름) -> 리턴결과 : 계좌 복수개
 	public BankBook[] searchAccountByName(String ownerName) {
 		// [서치 어카운트 바이 네임] 이 메소드를 호출하면 자동으로 [서치 카운트 바이 네임]을 먼저 실행 및 호출한다
-		BankBook[] accounts = null;
 		int tempCount = this.searchCountByName(ownerName);
-		if (tempCount == 0) {	// 조회한 사람의 통장의 count가 0이라면
+		if (tempCount == 0) {
+			// 검색결과가 0이라면 밑의것을 할 필요가없게끔 효율적인 코딩
 			return null;
-		} 
-		for (int i = 0; i < this.count; i++) {
-			if (bankBookList[i].getName().equals(ownerName)) {
-				accounts[count] = bankBookList[i];
-				tempCount++;
-			}
 		}
+		// 위처럼 필터링을 하는 이유는 본 알고리즘을 하기전에 필요없는 상태라면 알고리즘을 호출하지 않기위해서
+		// 그렇지 않으면 자원(리소스 : 메모리, DB)의 낭비를 초래한다.
+		BankBook[] accounts = new BankBook[tempCount];
+		tempCount = 0;	// 0으로 초기화 시켜서 배열의 인덱스로 사용해야 함.
+			for (int i = 0; i < this.count; i++) {
+				if (bankBookList[i].getName().equals(ownerName)) {
+					accounts[tempCount] = bankBookList[i];
+					tempCount++;
+				}
+			}
+		
 		return accounts;
 	}
 
@@ -105,13 +110,19 @@ public class Bank implements BankRole{
 
 	@Override	// 계좌 폐기
 	public boolean closeAccount(String accountNo) {
-		// flag 은 삭제가 성공적으로 이뤄지면 true를 리턴하고, 삭제할게 없다면 false를 리턴한다.
-		boolean flag = false;
+		// closeOk 은 삭제가 성공적으로 이뤄지면 true를 리턴하고, 삭제할게 없다면 false를 리턴한다.
+		boolean closeOk = false;
 		// 파라미터로 들어온 String문자열을 int형으로 바꿔서 비교하는 것.
+		BankBook bankBook = this.searchAccountByAccountNo(accountNo);
+		// 필터링에서는 else문을 사용하지 않고 only if를 사용한다.
+		if (bankBook == null) {
+			System.out.println("해당 계좌가 존재하지 않습니다.");
+			return closeOk;
+		}
 		int searchAccountNo = Integer.parseInt(accountNo);
 		for (int i = 0; i < this.count; i++) {
 			if (bankBookList[i].getBankBookNum() == searchAccountNo) {
-				flag = true;
+				closeOk = true;
 				/*
 					j = i 로 바꾼 이유는
 					홍길동의 계좌가 은행 전체계좌의 50번째라면 내부 for문에서 다시 처음 0 부터 회전하지 않고
@@ -126,8 +137,9 @@ public class Bank implements BankRole{
 					bankBookList[i] = bankBookList[j+1];
 				}
 				count--;
+				// 위 알고리즘을 거친 후에야 계좌 삭제가 일어난다.
 			}
 		}
-		return flag;
+		return closeOk;
 	}
 }
